@@ -2,8 +2,6 @@ using LibVLCSharp.Shared;
 
 using NStack;
 
-using QRCoder;
-
 using SonicLair.Cli;
 using SonicLair.Lib.Infrastructure;
 using SonicLair.Lib.Services;
@@ -18,7 +16,6 @@ namespace SonicLairCli
         private readonly Toplevel _top;
         private ISubsonicService? _subsonicService;
         private IMusicPlayerService? _musicPlayerService;
-        private WebSocketService? _messageServer;
         private FrameView? mainView;
         private TextView? _nowPlaying;
         private ProgressBar? _playingTime;
@@ -107,7 +104,7 @@ namespace SonicLairCli
                 Height = 2,
                 Width = Dim.Fill(),
                 CanFocus = false,
-                Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-j Jukebox | C-Right Fw(10s) | C-Left Bw(10s)" +
+                Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)" +
                 "\nC-c Quit | C-h Play/Pause | C-b Prev | C-n Next | C-s Shuffle | C-m Add | C-o Back",
             };
             return ret;
@@ -355,52 +352,6 @@ namespace SonicLairCli
             listView.FocusFirst();
         }
 
-        private void JukeboxView()
-        {
-            var ip = StaticHelpers.GetLocalIp();
-            mainView!.RemoveAll();
-            mainView.Title = "Jukebox";
-            string qr = "";
-            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
-            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode($"{ip}j", QRCodeGenerator.ECCLevel.Q))
-            using (AsciiQRCode qrCode = new AsciiQRCode(qrCodeData))
-            {
-                qr = qrCode.GetGraphic(1, drawQuietZones: false);
-            }
-            var slices = qr.Split('\n');
-
-            TextView qrView = new TextView()
-            {
-                X = Pos.Center(),
-                Y = Pos.Center(),
-                Width = slices[0].Length,
-                Height = slices.Length,
-                Text = qr,
-                CanFocus = false,
-            };
-            var label = "Scan this QR with your phone and connect to this instance to control it!";
-            TextView labelView = new TextView()
-            {
-                Y = Pos.Top(qrView) - 2,
-                X = Pos.Center(),
-                Width = label.Length,
-                Height = 1,
-                Text = label,
-                CanFocus = false,
-            };
-
-            TextView ipView = new TextView()
-            {
-                Y = Pos.Bottom(qrView) + 2,
-                X = Pos.Center(),
-                Width = ip.Length,
-                Height = 1,
-                Text = ip,
-                CanFocus = false,
-            };
-            mainView.Add(qrView, labelView, ipView);
-        }
-
         private async Task ArtistsView()
         {
             var artists = await _subsonicService!.GetArtists();
@@ -626,19 +577,6 @@ namespace SonicLairCli
                 _musicPlayerService.RegisterTimeChangedHandler(PlayingTimeHandler);
                 _musicPlayerService.RegisterPlayerVolumeHandler(PlayerVolumeHandler);
             }
-            if (_messageServer == null)
-            {
-                try
-                {
-                    _messageServer = new WebSocketService(_subsonicService, _musicPlayerService, false);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Query("Error", "Couldn't start the websockets server. " +
-                        "Won't be able to control this instance from outside. " +
-                        "Do you have permission to bind port 30001?", "Ok");
-                }
-            }
             _top.RemoveAll();
             var win = new SonicLairWindow($"SonicLair | {account.Username} on {account.Url}")
             {
@@ -698,11 +636,6 @@ namespace SonicLairCli
             {
                 _history.Push(() => { SearchView(); });
                 SearchView();
-            });
-            window.RegisterHotKey(Key.J | Key.CtrlMask, () =>
-            {
-                _history.Push(() => { JukeboxView(); });
-                JukeboxView();
             });
             window.RegisterHotKey(Key.S | Key.CtrlMask, () =>
             {

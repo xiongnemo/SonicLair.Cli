@@ -14,8 +14,6 @@ SonicLair.NET is a minimal, album-centered music client for subsonic compatible 
 - Album-centered music playing: if you start playing a song, the album becomes your playlist.
 - Start a radio based on any song on your library.
 - Search throughout your entire music library.
-- Connect your Xbox or terminal to your server using SonicLair on [your phone running Android](https://github.com/thelinkin3000/SonicLair) and a QR Code. (All the communications are made within the LAN, no third-party servers involved)
-- Jukebox Mode! Run an instance of Soniclair in an Xbox or any computer with a terminal and control it from another instance running on Android.
 
 ## Screenshots for Xbox
 
