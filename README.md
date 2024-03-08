@@ -4,9 +4,9 @@
    <img src="./logo.svg">
 </p>
 
-## An album-centered subsonic client for Xbox and the Terminal
+## An album-centered subsonic client for the Terminal
 
-SonicLair.NET is a minimal, album-centered music client for subsonic compatible music servers built using .net Core 6 and UWP, designed to run on Xbox and the terminal (Windows, Linux and macOS).
+SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .net Core 6, designed to run in the terminal (Windows, Linux and macOS).
 
 ## Features
 
@@ -14,15 +14,6 @@ SonicLair.NET is a minimal, album-centered music client for subsonic compatible 
 - Album-centered music playing: if you start playing a song, the album becomes your playlist.
 - Start a radio based on any song on your library.
 - Search throughout your entire music library.
-
-## Screenshots for Xbox
-
-<p align="middle">
-<img src="./Assets/screenshot1.png" width="70%">
-<img src="./Assets/screenshot2.png" width="70%">
-<img src="./Assets/screenshot3.png" width="70%">
-<img src="./Assets/screenshot4.png" width="70%">
-</p>
 
 ## Screenshots for the Terminal
 
@@ -36,17 +27,9 @@ SonicLair.NET is a minimal, album-centered music client for subsonic compatible 
 
 ## Installation and Usage
 
-### Xbox Retail Mode
-
-[<img src="./storelogo.svg" width="150px">](https://www.microsoft.com/en-us/p/soniclair/9np9hphmxdzr)
-
-### Xbox Developer Mode
-
-I'm working on getting a pipeline on github actions to get signed bundles for installing on Xbox via the Device Portal. Soon!
-
 ### Terminal
 
-[<img src="./ghlogo.svg" width="150px">](https://github.com/thelinkin3000/SonicLair.Net/releases)
+[<img src="./ghlogo.svg" width="150px">](https://github.com/xiongnemo/SonicLair.Cli/releases)
 
 The terminal version is an (almost) self contained executable. You can grab the version for your operating system from the releases page. Within the compressed file there is the excutable and (if applicable) the libvlc libraries needed for the audio backend to work. Please keep the directory structure as is.
 
@@ -70,11 +53,6 @@ More info about this [here](https://github.com/videolan/libvlcsharp/blob/3.x/doc
 
 Soniclair is built upon
 
-### Xbox
-
-- [WinUI2]
-- [WindowsCommunityToolkit] (used for a couple animations)
-
 ### Terminal
 
 - [Terminal.GUI]
@@ -82,14 +60,6 @@ Soniclair is built upon
 ### Common
 
 - [VLC] (as an audio backend)
-- [Watson Websocket]
-- [QR Coder]
-- [Dillinger] (used to write this README)
-
-## Contribute
-
-I'm not planning on receiving contributions yet, although you can fork this repo at your heart's desire!
-Soon, though.
 
 ## License
 
@@ -97,10 +67,4 @@ MIT, see LICENSE for more info.
 But basically, you can do whatever you want with this code.
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
-[winui2]: https://github.com/microsoft/microsoft-ui-xaml
-[windowscommunitytoolkit]: https://github.com/CommunityToolkit/WindowsCommunityToolkit
-[vlc]: https://www.videolan.org/
-[dillinger]: https://github.com/joemccann/dillinger
 [terminal.gui]: https://github.com/migueldeicaza/gui.cs
-[watson websocket]: https://github.com/jchristn/WatsonWebsocket
-[qr coder]: https://github.com/codebude/QRCoder
