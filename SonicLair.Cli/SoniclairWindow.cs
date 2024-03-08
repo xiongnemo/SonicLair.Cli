@@ -23,10 +23,16 @@ namespace SonicLair.Cli
         {
         }
 
-        private readonly Dictionary<Key, Action> _hotkeys = new Dictionary<Key, Action>();
+        private readonly Dictionary<Key, Action> _hotkeys = new();
+        private readonly Dictionary<Key, Action> _keys = new();
         public void RegisterHotKey(Key key, Action action)
         {
             _hotkeys.Add(key, action);
+        }
+
+        public void RegisterKey(Key key, Action action)
+        {
+            _keys.Add(key, action);
         }
 
         public override bool ProcessHotKey(KeyEvent e)
@@ -37,6 +43,16 @@ namespace SonicLair.Cli
                 return true;
             }
             return base.ProcessHotKey(e);
+        }
+
+        public override bool ProcessKey(KeyEvent e)
+        {
+            if (_keys.ContainsKey(e.Key))
+            {
+                _keys[e.Key]();
+                return true;
+            }
+            return base.ProcessKey(e);
         }
     }
 }

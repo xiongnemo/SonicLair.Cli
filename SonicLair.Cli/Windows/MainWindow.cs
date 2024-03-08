@@ -105,7 +105,7 @@ namespace SonicLairCli
                 Width = Dim.Fill(),
                 CanFocus = false,
                 Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)" +
-                "\nC-c Quit | C-h Play/Pause | C-b Prev | C-n Next | C-s Shuffle | C-m Add | C-o Back",
+                "\nC-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-s Shuffle | C-m Add | BackSpace Back",
             };
             return ret;
         }
@@ -601,7 +601,7 @@ namespace SonicLairCli
 
         public void RegisterHotKeys(SonicLairWindow window)
         {
-            window.RegisterHotKey(Key.C | Key.CtrlMask, () =>
+            window.RegisterHotKey(Key.Q | Key.CtrlMask, () =>
             {
                 Application.RequestStop();
             });
@@ -613,7 +613,7 @@ namespace SonicLairCli
             {
                 _musicPlayerService!.Prev();
             });
-            window.RegisterHotKey(Key.H | Key.CtrlMask, () =>
+            window.RegisterKey(Key.Space, () =>
             {
                 _musicPlayerService!.PlayPause();
             });
@@ -649,7 +649,7 @@ namespace SonicLairCli
             {
                 _musicPlayerService!.SetVolume(-5, true);
             });
-            window.RegisterHotKey(Key.O | Key.CtrlMask, () =>
+            window.RegisterKey(Key.Backspace, () =>
             {
                 _history.GoBack();
             });

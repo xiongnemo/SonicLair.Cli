@@ -83,6 +83,26 @@ namespace SonicLair.Cli
                 // I don't wanna process Ctrl hotkeys here
                 return false;
             }
+            if (e.Key == Key.Tab)
+            {
+                // reserved for tabbing
+                return false;
+            }
+            if (e.Key == Key.Backspace)
+            {
+                // reserved for back
+                return false;
+            }
+            if (e.Key == Key.Space)
+            {
+                // reserved for pause & play
+                return false;
+            }
+            if (e.Key == Key.Backspace)
+            {
+                // reserved for back
+                return false;
+            }
             if (!e.IsCtrl && !e.IsAlt && !e.IsShift && e.Key != Key.Enter && !movementKeys.Contains(e.Key))
             {
                 var diff = (DateTime.Now - lastPressed).Milliseconds;
