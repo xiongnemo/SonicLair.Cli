@@ -1,5 +1,5 @@
 using LibVLCSharp.Shared;
-
+using Microsoft.VisualBasic;
 using NStack;
 
 using SonicLair.Cli;
@@ -14,12 +14,14 @@ namespace SonicLairCli
     public class MainWindow : IWindowFrame
     {
         private readonly Toplevel _top;
+        private FrameView? audioControlView;
         private ISubsonicService? _subsonicService;
         private IMusicPlayerService? _musicPlayerService;
         private FrameView? mainView;
         private TextView? _nowPlaying;
         private ProgressBar? _playingTime;
         private ProgressBar? _volumeSlider;
+        private TextView? _volumeText;
         private TextView? _timeElapsed;
         private TextView? _songDuration;
         private CurrentState? _state;
@@ -97,7 +99,7 @@ namespace SonicLairCli
 
         public TextView GetBaseBar(View controlView)
         {
-            var ret = new TextView()
+            return new TextView()
             {
                 X = 0,
                 Y = Pos.Bottom(controlView),
@@ -107,7 +109,6 @@ namespace SonicLairCli
                 Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)" +
                 "\nC-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-s Shuffle | C-m Add | BackSpace Back",
             };
-            return ret;
         }
 
         public FrameView GetAudioControlView(View anchorTop)
@@ -118,7 +119,7 @@ namespace SonicLairCli
                 Y = Pos.Bottom(anchorTop),
                 Height = 5,
                 Width = Dim.Fill(),
-                Title = "Now Playing"
+                Title = "Idling"
             };
             _nowPlaying = new TextView()
             {
@@ -139,7 +140,7 @@ namespace SonicLairCli
             };
             _volumeSlider = new ProgressBar()
             {
-                X = Pos.Right(volumeLabel),
+                X = Pos.Right(volumeLabel) + 1,
                 Y = 0,
                 Width = Dim.Fill() - 10,
                 Height = 1,
@@ -153,6 +154,15 @@ namespace SonicLairCli
                 },
                 Fraction = 1
             };
+            _volumeText = new TextView()
+            {
+                X = Pos.Right(ret) - (4 + 2),
+                Y = 0,
+                Width = 4,
+                Height = 1,
+                CanFocus = false,
+                Text = "100%"
+            };
             _timeElapsed = new TextView()
             {
                 X = 0,
@@ -165,7 +175,7 @@ namespace SonicLairCli
             {
                 X = 0,
                 Y = 2,
-                Width = Dim.Fill(),
+                Width = Dim.Fill() - 10,
                 Height = 1,
                 ProgressBarFormat = ProgressBarFormat.Simple,
                 ProgressBarStyle = ProgressBarStyle.Blocks,
@@ -178,7 +188,7 @@ namespace SonicLairCli
             };
             _songDuration = new TextView()
             {
-                X = Pos.Right(_playingTime) - 5,
+                X = Pos.Right(ret) - (5 + 2),
                 Y = 1,
                 Width = 5, // MM:SS
                 Height = 1,
@@ -187,6 +197,7 @@ namespace SonicLairCli
             ret.Add(_nowPlaying);
             ret.Add(volumeLabel);
             ret.Add(_volumeSlider);
+            ret.Add(_volumeText);
             ret.Add(_playingTime);
             ret.Add(_timeElapsed);
             ret.Add(_songDuration);
@@ -308,7 +319,7 @@ namespace SonicLairCli
                         var max = ret.Albums.Max(s => s.Name.Length);
                         albumsList.Source = new SonicLairDataSource<Album>(ret.Albums, (s) =>
                         {
-                            return $"{s.Name.PadRight(max, ' ')} by {s.Artist}";
+                            return $"{s.Artist} :: {s.Name.PadRight(max, ' ')}";
                         });
                     }
                     if (ret.Songs != null && ret.Songs.Any<Song>())
@@ -316,7 +327,7 @@ namespace SonicLairCli
                         var max = ret.Songs.Max(s => s.Title.Length);
                         songsList.Source = new SonicLairDataSource<Song>(ret.Songs, (s) =>
                         {
-                            return $"{s.Title.PadRight(max, ' ')} by {s.Artist}";
+                            return $"{s.Artist} :: {s.Title.PadRight(max, ' ')}";
                         });
                     }
                     Application.Refresh();
@@ -510,6 +521,14 @@ namespace SonicLairCli
             _state = e.CurrentState;
             Application.MainLoop.Invoke(() =>
             {
+                if (e.CurrentState.IsPlaying)
+                {
+                    audioControlView!.Title = "Now Playing";
+                }
+                else
+                {
+                    audioControlView!.Title = "Paused";
+                }
                 if (e.CurrentState?.CurrentTrack != null)
                 {
                     _nowPlaying!.Text = $"{e.CurrentState.CurrentTrack.Title} by {e.CurrentState.CurrentTrack.Artist}";
@@ -560,6 +579,10 @@ namespace SonicLairCli
             {
                 _volumeSlider.Fraction = e.Volume;
             }
+            if (_volumeText != null)
+            {
+                _volumeText.Text = $"{(int)(e.Volume * 100)}%";
+            }
         }
 
         public void Load()
@@ -589,9 +612,9 @@ namespace SonicLairCli
 
             mainView = GetMainView();
             win.Add(mainView);
-            var nowPlaying = GetAudioControlView(mainView);
-            win.Add(nowPlaying);
-            var baseBar = GetBaseBar(nowPlaying);
+            audioControlView = GetAudioControlView(mainView);
+            win.Add(audioControlView);
+            var baseBar = GetBaseBar(audioControlView);
             win.Add(baseBar);
             var currentPlayingList = GetCurrentPlaylist(mainView);
             win.Add(currentPlayingList);
