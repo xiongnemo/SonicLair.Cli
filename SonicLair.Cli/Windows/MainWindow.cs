@@ -142,7 +142,8 @@ namespace SonicLairCli
             {
                 X = Pos.Right(volumeLabel) + 1,
                 Y = 0,
-                Width = Dim.Fill() - 10,
+                // minus x: x = length of _volumeText + extra space
+                Width = Dim.Fill() - (4 + 1),
                 Height = 1,
                 ProgressBarFormat = ProgressBarFormat.SimplePlusPercentage,
                 ProgressBarStyle = ProgressBarStyle.Blocks,
@@ -175,7 +176,8 @@ namespace SonicLairCli
             {
                 X = 0,
                 Y = 2,
-                Width = Dim.Fill() - 10,
+                // minus x: x = length of _volumeText - 1
+                Width = Dim.Fill() - (4 + 1),
                 Height = 1,
                 ProgressBarFormat = ProgressBarFormat.Simple,
                 ProgressBarStyle = ProgressBarStyle.Blocks,
@@ -327,7 +329,7 @@ namespace SonicLairCli
                         var max = ret.Songs.Max(s => s.Title.Length);
                         songsList.Source = new SonicLairDataSource<Song>(ret.Songs, (s) =>
                         {
-                            return $"{s.Artist} :: {s.Title.PadRight(max, ' ')}";
+                            return $"{s.Artist} :: {s.Album} :: {s.Title.PadRight(max, ' ')}";
                         });
                     }
                     Application.Refresh();
@@ -531,7 +533,7 @@ namespace SonicLairCli
                 }
                 if (e.CurrentState?.CurrentTrack != null)
                 {
-                    _nowPlaying!.Text = $"{e.CurrentState.CurrentTrack.Title} by {e.CurrentState.CurrentTrack.Artist}";
+                    _nowPlaying!.Text = $"{e.CurrentState.CurrentTrack.Artist} :: {e.CurrentState.CurrentTrack.Album} :: {e.CurrentState.CurrentTrack.Title} ";
                     _songDuration!.Text = e.CurrentState.CurrentTrack.Duration.GetAsMMSS();
                 }
                 if (_nowPlayingList != null && _state?.CurrentPlaylist?.Entry != null && _state.CurrentPlaylist.Entry.Any())
