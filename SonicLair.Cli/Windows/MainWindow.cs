@@ -418,7 +418,7 @@ namespace SonicLairCli
         {
             var album = await _subsonicService!.GetAlbum(id);
             mainView!.RemoveAll();
-            mainView.Title = $"{album.Name} by {album.Artist}";
+            mainView.Title = $"{album.Name} :: {album.Artist}";
             SonicLairListView<Song> listView = new SonicLairListView<Song>()
             {
                 X = 0,
@@ -448,7 +448,7 @@ namespace SonicLairCli
         {
             var playlist = await _subsonicService!.GetPlaylist(id);
             mainView!.RemoveAll();
-            mainView.Title = $"{playlist.Name} by {playlist.Owner} -- Lasts {playlist.Duration.GetAsMMSS()}";
+            mainView.Title = $"{playlist.Name} :: {playlist.Owner} -- Lasts {playlist.Duration.GetAsMMSS()}";
             SonicLairListView<Song> listView = new SonicLairListView<Song>()
             {
                 X = 0,
@@ -460,7 +460,7 @@ namespace SonicLairCli
             var maxArtist = playlist.Entry.Max(s => s.Artist.Length);
             var source = new SonicLairDataSource<Song>(playlist.Entry, (s) =>
             {
-                return $"{s.Title.PadRight(maxTitle, ' ')} by {s.Artist.PadRight(maxArtist, ' ')} [{s.Duration.GetAsMMSS()}]";
+                return $"{s.Title.PadRight(maxTitle, ' ')} :: {s.Artist.PadRight(maxArtist, ' ')} [{s.Duration.GetAsMMSS()}]";
             });
             listView.Source = source;
             listView.OpenSelectedItem += (ListViewItemEventArgs e) =>
@@ -492,7 +492,7 @@ namespace SonicLairCli
             var maxOwner = playlists.Max(s => s.Owner.Length);
             listView.Source = new SonicLairDataSource<Playlist>(playlists, (p) =>
             {
-                return $"{p.Name.PadRight(maxName + 1, ' ')} by {p.Owner.PadRight(maxOwner + 1, ' ')} [lasts {p.Duration.GetAsMMSS()}]";
+                return $"{p.Name.PadRight(maxName + 1, ' ')} :: {p.Owner.PadRight(maxOwner + 1, ' ')} [lasts {p.Duration.GetAsMMSS()}]";
             });
             listView.OpenSelectedItem += (ListViewItemEventArgs e) =>
             {
