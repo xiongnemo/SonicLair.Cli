@@ -111,6 +111,30 @@ namespace SonicLair.Lib.Services
                     Notifier.NotifyObservers("MSpaused");
                 }
             };
+            _mediaPlayer.Stopped += (sender, args) =>
+            {
+                try
+                {
+                    foreach (var handler in _currentStateListeners)
+                    {
+                        var currentState = GetCurrentState();
+                        currentState.Stopped = true;
+                        currentState.IsPlaying = false;
+                        handler.Invoke(this, new CurrentStateChangedEventArgs()
+                        {
+                            CurrentState = currentState
+                        });
+                    }
+                }
+                catch (Exception)
+                {
+                    // Concurrency is hard
+                }
+                if (Notifier != null)
+                {
+                    Notifier.NotifyObservers("MSstopped");
+                }
+            };
             _mediaPlayer.Volume = 100;
             _mediaPlayer.TimeChanged += (sender, args) =>
             {
@@ -159,6 +183,7 @@ namespace SonicLair.Lib.Services
                 CurrentTrack = _currentTrack,
                 Position = (decimal)_mediaPlayer.Position,
                 IsPlaying = _mediaPlayer.IsPlaying,
+                Stopped = false,
                 CurrentPlaylist = _playlist,
                 IsShuffled = _isShuffling
             };

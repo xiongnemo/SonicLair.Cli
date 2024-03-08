@@ -527,6 +527,10 @@ namespace SonicLairCli
                 {
                     audioControlView!.Title = "Now Playing";
                 }
+                else if (e.CurrentState.Stopped)
+                {
+                    audioControlView!.Title = "Stopped";
+                }
                 else
                 {
                     audioControlView!.Title = "Paused";
