@@ -6,7 +6,7 @@
 
 ## An album-centered subsonic client for the Terminal
 
-SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .net Core 6, designed to run in the terminal (Windows, Linux and macOS).
+SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .net Core 6, designed to run in the terminal (Windows, Linux and macOS). It's derived from [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET).
 
 ## Features
 
@@ -67,4 +67,5 @@ MIT, see LICENSE for more info.
 But basically, you can do whatever you want with this code.
 
 [//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
+[vlc]: https://www.videolan.org/
 [terminal.gui]: https://github.com/migueldeicaza/gui.cs
