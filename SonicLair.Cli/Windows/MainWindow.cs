@@ -107,7 +107,7 @@ namespace SonicLairCli
                 Width = Dim.Fill(),
                 CanFocus = false,
                 Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)" +
-                "\nC-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-s Shuffle | C-m Add | BackSpace Back",
+                "\nC-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-h Shuffle | C-m Add | BackSpace Back",
             };
         }
 
@@ -660,7 +660,7 @@ namespace SonicLairCli
                 _history.Push(() => { SearchView(); });
                 SearchView();
             });
-            window.RegisterHotKey(Key.S | Key.CtrlMask, () =>
+            window.RegisterHotKey(Key.H | Key.CtrlMask, () =>
             {
                 _musicPlayerService!.Shuffle();
             });
