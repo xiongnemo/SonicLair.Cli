@@ -569,7 +569,15 @@ namespace SonicLairCli
                 Application.MainLoop.Invoke(() =>
                 {
                     _timeElapsed!.Text = ((int)e.Time / 1000).GetAsMMSS();
-                    _playingTime!.Fraction = (e.Time / 1000f) / (_state.CurrentTrack.Duration);
+                    // if (_state.IsPlaying)
+                    // {
+                    //     _playingTime!.Fraction = (e.Time / 1000f) / (_state.CurrentTrack.Duration);
+                    // }
+                    // else
+                    // {
+                    // _playingTime!.Fraction = (float)Math.Ceiling((double)(e.Time / 10) / _state.CurrentTrack.Duration) / 100;
+                    _playingTime!.Fraction = (float)Math.Round(((double)e.Time / 10) / _state.CurrentTrack.Duration) / 100;
+                    // }
                     Application.Refresh();
                 });
             }
@@ -692,7 +700,7 @@ namespace SonicLairCli
                 {
                     var newPosition = 10f / _musicPlayerService!.GetCurrentState().CurrentTrack.Duration;
                     _musicPlayerService.Seek(-newPosition, true);
-                    
+
                 }
             });
         }
