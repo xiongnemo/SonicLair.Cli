@@ -10,7 +10,7 @@ namespace SonicLair.Cli
     public class SonicLairDataSource<T> : IListDataSource
     {
         private List<T> _items;
-        private BitArray marks;
+        private BitArray? marks;
         private int count, len;
 
         private readonly Func<T, string> _serializer;
@@ -33,7 +33,7 @@ namespace SonicLair.Cli
         public bool IsMarked(int item)
         {
             if (item >= 0 && item < count)
-                return marks[item];
+                return marks![item];
             return false;
         }
 
@@ -57,7 +57,7 @@ namespace SonicLair.Cli
         public void SetMark(int item, bool value)
         {
             if (item >= 0 && item < count)
-                marks[item] = value;
+                marks![item] = value;
         }
 
         private int GetMaxLengthItem()

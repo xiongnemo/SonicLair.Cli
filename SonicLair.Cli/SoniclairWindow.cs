@@ -7,19 +7,19 @@ namespace SonicLair.Cli
     public class SonicLairWindow : Window
     {
 
-        public SonicLairWindow(ustring title = null) : base(title)
+        public SonicLairWindow(ustring title) : base(title)
         {
         }
 
-        public SonicLairWindow(Rect frame, ustring title = null) : base(frame, title)
+        public SonicLairWindow(Rect frame, ustring title) : base(frame, title)
         {
         }
 
-        public SonicLairWindow(ustring title = null, int padding = 0) : base(title, padding)
+        public SonicLairWindow(ustring title, int padding = 0) : base(title, padding)
         {
         }
 
-        public SonicLairWindow(Rect frame, ustring title = null, int padding = 0) : base(frame, title, padding)
+        public SonicLairWindow(Rect frame, ustring title, int padding = 0) : base(frame, title, padding)
         {
         }
 

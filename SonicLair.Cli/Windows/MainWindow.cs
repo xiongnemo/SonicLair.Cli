@@ -655,7 +655,7 @@ namespace SonicLairCli
             });
             window.RegisterHotKey(Key.CursorRight | Key.CtrlMask, () =>
             {
-                if (_musicPlayerService.GetCurrentState().IsPlaying)
+                if (_musicPlayerService!.GetCurrentState().IsPlaying)
                 {
                     var newPosition = 10f / _musicPlayerService!.GetCurrentState().CurrentTrack.Duration;
                     _musicPlayerService.Seek(newPosition, true);
@@ -663,7 +663,7 @@ namespace SonicLairCli
             });
             window.RegisterHotKey(Key.CursorLeft | Key.CtrlMask, () =>
             {
-                if (_musicPlayerService.GetCurrentState().IsPlaying)
+                if (_musicPlayerService!.GetCurrentState().IsPlaying)
                 {
                     var newPosition = 10f / _musicPlayerService!.GetCurrentState().CurrentTrack.Duration;
                     _musicPlayerService.Seek(-newPosition, true);

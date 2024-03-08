@@ -12,7 +12,7 @@ namespace SonicLair.Cli
 
     public class Statics
     {
-        private static StaticsContainer _container { get; set; }
+        private static StaticsContainer? _container { get; set; }
 
         private static StaticsContainer Get()
         {
