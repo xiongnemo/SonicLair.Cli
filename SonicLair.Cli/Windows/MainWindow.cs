@@ -22,6 +22,8 @@ namespace SonicLairCli
         private ProgressBar? _playingTime;
         private ProgressBar? _volumeSlider;
         private TextView? _volumeText;
+        private TextView? _RepeatText;
+        private TextView? _shuffleText;
         private TextView? _timeElapsed;
         private TextView? _songDuration;
         private CurrentState? _state;
@@ -91,24 +93,53 @@ namespace SonicLairCli
             {
                 X = 0,
                 Y = 0,
-                Height = Dim.Fill() - 7,
+                Height = Dim.Fill() - 9,
                 Width = Dim.Fill() - 35
             };
             return ret;
         }
 
-        public TextView GetBaseBar(View controlView)
+        public FrameView GetBaseBar(View controlView)
         {
-            return new TextView()
+            var ret = new FrameView()
             {
                 X = 0,
                 Y = Pos.Bottom(controlView),
-                Height = 2,
+                Height = 4,
                 Width = Dim.Fill(),
-                CanFocus = false,
-                Text = "C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)" +
-                "\nC-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-h Shuffle | C-m Add | BackSpace Back",
+                Title = "Controls"
             };
+            _RepeatText = new TextView()
+            {
+                X = Pos.Right(ret) - (12 + 1),
+                Y = 0,
+                Height = 1,
+                Width = 12,
+                CanFocus = false,
+                Text = "Repeat: Off",
+            };
+            _shuffleText = new TextView()
+            {
+                X = Pos.Right(ret) - (13 + 1),
+                Y = 1,
+                Height = 1,
+                Width = 13,
+                CanFocus = false,
+                Text = "Shuffle: Off",
+            };
+            var helperText = new TextView()
+            {
+                X = 0,
+                Y = 0,
+                Height = 2,
+                Width = Dim.Fill() - 15,
+                CanFocus = false,
+                Text =
+@"C-a Artists | C-l Album | C-p Playlists | C-r Search | C-Right Fw(10s) | C-Left Bw(10s)
+C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C-m Add | BackSpace Back",
+            };
+            ret.Add(_RepeatText, _shuffleText, helperText);
+            return ret;
         }
 
         public FrameView GetAudioControlView(View anchorTop)
@@ -561,7 +592,31 @@ namespace SonicLairCli
                     _nowPlayingList.SelectedItem = _state.CurrentPlaylist.Entry.IndexOf(_state.CurrentTrack);
                     _nowPlayingList.ScrollTo(_state.CurrentPlaylist.Entry.IndexOf(_state.CurrentTrack));
                 }
+                // RepeatStatus
+                switch (_state!.RepeatStatus)
+                {
+                    case RepeatStatus.RepeatAll:
+                        _RepeatText!.Text = "Repeat: All";
+                        break;
+                    case RepeatStatus.RepeatOne:
 
+                        _RepeatText!.Text = "Repeat: One";
+                        break;
+                    case RepeatStatus.None:
+                        _RepeatText!.Text = "Repeat: Off";
+                        break;
+                    default:
+                        break;
+                }
+                // Shuffle
+                if (_state.IsShuffled)
+                {
+                    _shuffleText!.Text = " Shuffle: On";
+                }
+                else
+                {
+                    _shuffleText!.Text = "Shuffle: Off";
+                }
                 Application.Refresh();
             });
         }
@@ -644,7 +699,7 @@ namespace SonicLairCli
             });
             window.RegisterHotKey(Key.N | Key.CtrlMask, () =>
             {
-                _musicPlayerService!.Next();
+                _musicPlayerService!.ToggleNext();
             });
             window.RegisterHotKey(Key.B | Key.CtrlMask, () =>
             {
@@ -673,6 +728,10 @@ namespace SonicLairCli
             {
                 _history.Push(() => { SearchView(); });
                 SearchView();
+            });
+            window.RegisterHotKey(Key.T | Key.CtrlMask, () =>
+            {
+                _musicPlayerService!.ToggleRepeat();
             });
             window.RegisterHotKey(Key.H | Key.CtrlMask, () =>
             {

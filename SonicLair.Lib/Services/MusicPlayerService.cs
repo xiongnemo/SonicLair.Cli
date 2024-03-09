@@ -7,6 +7,7 @@ using SonicLair.Lib.Types;
 using SonicLair.Lib.Types.SonicLair;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SonicLair.Lib.Services
         private readonly List<EventHandler<CurrentStateChangedEventArgs>> _currentStateListeners;
         private readonly List<EventHandler<MediaPlayerTimeChangedEventArgs>> _playerTimeListeners;
         private readonly List<EventHandler<MediaPlayerVolumeChangedEventArgs>> _playerVolumeListeners;
+        private RepeatStatus _repeatStatus;
         private bool _isShuffling;
         public Song _currentTrack { get; private set; }
         public INotifier Notifier { get; set; }
@@ -157,6 +159,7 @@ namespace SonicLair.Lib.Services
             };
             _mediaPlayer.EndReached += (sender, args) =>
             {
+                // Invoke when the media has finished playing
                 ThreadPool.QueueUserWorkItem(_ => Next());
             };
         }
@@ -185,10 +188,28 @@ namespace SonicLair.Lib.Services
                 IsPlaying = _mediaPlayer.IsPlaying,
                 Stopped = false,
                 CurrentPlaylist = _playlist,
+                RepeatStatus = _repeatStatus,
                 IsShuffled = _isShuffling
             };
         }
-
+        public void ToggleRepeat()
+        {
+            _repeatStatus = _repeatStatus.Next();
+            try
+            {
+                foreach (var handler in _currentStateListeners)
+                {
+                    handler.Invoke(this, new CurrentStateChangedEventArgs()
+                    {
+                        CurrentState = GetCurrentState()
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                // Concurrency is hard
+            }
+        }
         public void Shuffle()
         {
             if (_isShuffling)
@@ -197,7 +218,7 @@ namespace SonicLair.Lib.Services
             }
             else
             {
-                if(_playlist.Entry.Count == 0)
+                if (_playlist.Entry.Count == 0)
                 {
                     return;
                 }
@@ -248,7 +269,7 @@ namespace SonicLair.Lib.Services
 
         public void SkipTo(int index)
         {
-            if(index > 0 && index < _playlist.Entry.Count)
+            if (index > 0 && index < _playlist.Entry.Count)
             {
                 _currentTrack = _playlist.Entry[index];
             }
@@ -288,22 +309,64 @@ namespace SonicLair.Lib.Services
             _client.Scrobble(_currentTrack.Id);
         }
 
-        public void Next()
+        // intendeded by user
+        public void ToggleNext()
         {
             if (_playlist.Entry.IndexOf(_currentTrack) == _playlist.Entry.Count - 1)
             {
-                return;
+                switch (_repeatStatus)
+                {
+                    case RepeatStatus.None:
+                    case RepeatStatus.RepeatOne:
+                        return;
+                    case RepeatStatus.RepeatAll:
+                        _currentTrack = _playlist.Entry[0];
+                        LoadMedia();
+                        Play();
+                        return;
+                    default:
+                        return;
+                }
             }
             _currentTrack = _playlist.Entry[_playlist.Entry.IndexOf(_currentTrack) + 1];
             LoadMedia();
             Play();
         }
 
+        // not intended by user
+        public void Next()
+        {
+            switch (_repeatStatus)
+            {
+                case RepeatStatus.RepeatOne:
+                    LoadMedia();
+                    Play();
+                    return;
+                case RepeatStatus.None:
+                case RepeatStatus.RepeatAll:
+                default:
+                    break;
+            }
+            ToggleNext();
+        }
+
         public void Prev()
         {
             if (_playlist.Entry.IndexOf(_currentTrack) == 0)
             {
-                return;
+                switch (_repeatStatus)
+                {
+                    case RepeatStatus.None:
+                    case RepeatStatus.RepeatOne:
+                        return;
+                    case RepeatStatus.RepeatAll:
+                        _currentTrack = _playlist.Entry[_playlist.Entry.Count - 1];
+                        LoadMedia();
+                        Play();
+                        return;
+                    default:
+                        return;
+                }
             }
             _currentTrack = _playlist.Entry[_playlist.Entry.IndexOf(_currentTrack) - 1];
             LoadMedia();

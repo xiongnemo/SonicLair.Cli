@@ -13,6 +13,7 @@ namespace SonicLair.Lib.Services
         Song _currentTrack { get; }
 
         CurrentState GetCurrentState();
+        void ToggleNext();
         void Next();
         Task PlayAlbum(string id, int track = 0);
         void Prev();
@@ -26,6 +27,7 @@ namespace SonicLair.Lib.Services
         Task PlayRadio(string id);
         void Seek(float time, bool relative = false);
         Task PlayPlaylist(string id, int track);
+        void ToggleRepeat();
         void Shuffle();
         void SetNotifier(INotifier notifier);
         void PlayPause();

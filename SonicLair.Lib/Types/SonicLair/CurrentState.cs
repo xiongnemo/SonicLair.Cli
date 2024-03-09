@@ -7,6 +7,7 @@
         public bool IsPlaying { get; set; }
         public bool Stopped { get; set; }
         public Playlist CurrentPlaylist { get; set; }
+        public RepeatStatus RepeatStatus { get; set; }
         public bool IsShuffled { get; set; }
     }
 }
