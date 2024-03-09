@@ -1,4 +1,4 @@
-# 1.1.0 release!
+# 1.1.1 release!
 
-* Implement repeat mechanism.
-* Implement repeat and shuffle indicators.
+* Fix shuffle (see git commit desc).
+* Allow more time to do search inside list.
