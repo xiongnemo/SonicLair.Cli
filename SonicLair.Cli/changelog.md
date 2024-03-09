@@ -1,3 +1,4 @@
-# New release!
+# 1.1.0 release!
 
-First release.
+* Implement repeat mechanism.
+* Implement repeat and shuffle indicators.
