@@ -599,7 +599,6 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                         _RepeatText!.Text = "Repeat: All";
                         break;
                     case RepeatStatus.RepeatOne:
-
                         _RepeatText!.Text = "Repeat: One";
                         break;
                     case RepeatStatus.None:
