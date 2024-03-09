@@ -107,7 +107,7 @@ namespace SonicLair.Cli
             {
                 var diff = (DateTime.Now - lastPressed).Milliseconds;
                 Debug.WriteLine(diff);
-                if (diff > 200)
+                if (diff > 500)
                 {
                     Debug.WriteLine("Clearing searchterm");
                     searchTerm = "";
