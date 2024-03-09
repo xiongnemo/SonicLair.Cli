@@ -214,7 +214,7 @@ namespace SonicLair.Lib.Services
         {
             if (_isShuffling)
             {
-                _playlist.Entry = _originalPlaylist;
+                _playlist.Entry = new List<Song>(_originalPlaylist);
             }
             else
             {
