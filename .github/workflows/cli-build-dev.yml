@@ -1,0 +1,95 @@
+name: Build CLI (dev)
+
+on:
+  push:
+    branches:
+        - dev
+
+jobs:
+  build:
+    permissions: write-all
+    name: Build CLI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: "8.x" # SDK Version to use; x will use the latest version of the 3.1 channel
+
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Build win-x64
+        run: |
+          cd SonicLair.Cli
+          dotnet publish --configuration Release --self-contained true --runtime win-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtWinx64
+          rm -r builtWinx64/libvlc/win-x86
+          cd ..
+          mkdir win64
+          cp -r SonicLair.Cli/builtWinx64/libvlc win64/
+          cp SonicLair.Cli/builtWinx64/SonicLair.Cli.exe win64/
+
+      - name: Bundle win-x64
+        uses: vimtor/action-zip@v1
+        with:
+          files: win64
+          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
+
+      - name: Build win-x86
+        run: |
+          cd SonicLair.Cli
+          dotnet publish --configuration Release --self-contained true --runtime win-x86 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtWinx86
+          rm -r builtWinx86/libvlc/win-x64
+          cd ..
+          mkdir win86
+          cp -r SonicLair.Cli/builtWinx86/libvlc win86/
+          cp SonicLair.Cli/builtWinx86/SonicLair.Cli.exe win86/
+
+      - name: Bundle win-x86
+        uses: vimtor/action-zip@v1
+        with:
+          files: win86
+          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x86.zip
+          recursive: false
+
+      - name: Build osx-x64
+        run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtOsx
+
+      - name: Bundle osx-x64
+        uses: vimtor/action-zip@v1
+        with:
+          files: SonicLair.Cli/builtOsx/SonicLair.Cli SonicLair.Cli/builtOsx/libvlc.dylib
+          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-macos-x64.zip
+
+      - name: Build linux-x64
+        run: |
+          cd SonicLair.Cli
+          dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinux64
+          cd builtLinux64
+          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-x64.tar.gz ./SonicLair.Cli
+
+      - name: Build linux-arm
+        run: |
+          cd SonicLair.Cli
+          dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArmel
+          cd builtLinuxArmel
+          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm.tar.gz ./SonicLair.Cli
+
+      - name: Build linux-arm64
+        run: |
+          cd SonicLair.Cli
+          dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArm64
+          cd builtLinuxArm64
+          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm64.tar.gz SonicLair.Cli
+
+      - name: Upload release bundle as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
+          retention-days: 60
+
