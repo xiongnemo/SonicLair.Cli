@@ -33,12 +33,6 @@ jobs:
           cp -r SonicLair.Cli/builtWinx64/libvlc win64/
           cp SonicLair.Cli/builtWinx64/SonicLair.Cli.exe win64/
 
-      - name: Bundle win-x64
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: win64
-          dest: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
-
       - name: Build win-x86
         run: |
           cd SonicLair.Cli
@@ -49,75 +43,58 @@ jobs:
           cp -r SonicLair.Cli/builtWinx86/libvlc win86/
           cp SonicLair.Cli/builtWinx86/SonicLair.Cli.exe win86/
 
-      - name: Bundle win-x86
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: win86
-          dest: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
-          recursive: false
-
       - name: Build osx-x64
         run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtOsx
-
-      - name: Bundle osx-x64
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: SonicLair.Cli/builtOsx/SonicLair.Cli SonicLair.Cli/builtOsx/libvlc.dylib
-          dest: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
 
       - name: Build linux-x64
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinux64
-          cd builtLinux64
-          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz ./SonicLair.Cli
 
       - name: Build linux-arm
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArmel
-          cd builtLinuxArmel
-          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz ./SonicLair.Cli
 
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArm64
-          cd builtLinuxArm64
-          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz SonicLair.Cli
 
       - name: Attach win-x64 artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64
+            path: win64
 
       - name: Attach win-x86 artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86
+            path: win86
 
       - name: Attach macos-x64 artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64
+            path: |
+              SonicLair.Cli/builtOsx/SonicLair.Cli
+              SonicLair.Cli/builtOsx/libvlc.dylib
 
       - name: Attach linux-x64 artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64
+            path: SonicLair.Cli/builtLinux64/SonicLair.Cli
 
       - name: Attach linux-arm artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm
+            path: SonicLair.Cli/builtLinuxArmel/SonicLair.Cli
 
       - name: Attach linux-arm64 artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz
-            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64
+            path: SonicLair.Cli/builtLinuxArm64/SonicLair.Cli
