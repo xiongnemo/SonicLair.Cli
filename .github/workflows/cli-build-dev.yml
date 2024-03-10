@@ -11,9 +11,9 @@ jobs:
     name: Build CLI
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
+      - name: Get commit hash
+        id: short
+        uses: prompt/actions-commit-hash@v3
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
@@ -37,7 +37,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: win64
-          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
+          dest: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
 
       - name: Build win-x86
         run: |
@@ -53,7 +53,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: win86
-          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x86.zip
+          dest: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
           recursive: false
 
       - name: Build osx-x64
@@ -63,33 +63,33 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: SonicLair.Cli/builtOsx/SonicLair.Cli SonicLair.Cli/builtOsx/libvlc.dylib
-          dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-macos-x64.zip
+          dest: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
 
       - name: Build linux-x64
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinux64
           cd builtLinux64
-          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-x64.tar.gz ./SonicLair.Cli
+          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz ./SonicLair.Cli
 
       - name: Build linux-arm
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArmel
           cd builtLinuxArmel
-          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm.tar.gz ./SonicLair.Cli
+          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz ./SonicLair.Cli
 
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArm64
           cd builtLinuxArm64
-          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm64.tar.gz SonicLair.Cli
+          tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz SonicLair.Cli
 
       - name: Upload release bundle as artifact
         uses: actions/upload-artifact@v3
         with:
           path: |
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
+            SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
           retention-days: 60
 
