@@ -86,10 +86,38 @@ jobs:
           cd builtLinuxArm64
           tar czfv ../../SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz SonicLair.Cli
 
-      - name: Upload release bundle as artifact
+      - name: Attach win-x64 artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: |
-            SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
-          retention-days: 60
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-win-x64.zip
 
+      - name: Attach win-x86 artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-win-x86.zip
+
+      - name: Attach macos-x64 artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-macos-x64.zip
+
+      - name: Attach linux-x64 artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64.tar.gz
+
+      - name: Attach linux-arm artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm.tar.gz
+
+      - name: Attach linux-arm64 artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz
+            path: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm64.tar.gz
