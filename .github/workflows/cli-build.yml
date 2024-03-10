@@ -16,12 +16,12 @@ jobs:
         uses: dawidd6/action-get-tag@v1
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.x" # SDK Version to use; x will use the latest version of the 3.1 channel
 
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Build win-x64
         run: |
@@ -34,7 +34,7 @@ jobs:
           cp SonicLair.Cli/builtWinx64/SonicLair.Cli.exe win64/
 
       - name: Bundle win-x64
-        uses: vimtor/action-zip@v1
+        uses: vimtor/action-zip@v1.2
         with:
           files: win64
           dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
@@ -50,7 +50,7 @@ jobs:
           cp SonicLair.Cli/builtWinx86/SonicLair.Cli.exe win86/
 
       - name: Bundle win-x86
-        uses: vimtor/action-zip@v1
+        uses: vimtor/action-zip@v1.2
         with:
           files: win86
           dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x86.zip
@@ -60,7 +60,7 @@ jobs:
         run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtOsx
 
       - name: Bundle osx-x64
-        uses: vimtor/action-zip@v1
+        uses: vimtor/action-zip@v1.2
         with:
           files: SonicLair.Cli/builtOsx/SonicLair.Cli SonicLair.Cli/builtOsx/libvlc.dylib
           dest: SonicLair.Cli-${{steps.tag.outputs.tag}}-macos-x64.zip
@@ -85,18 +85,6 @@ jobs:
           dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArm64
           cd builtLinuxArm64
           tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm64.tar.gz SonicLair.Cli
-
-      - name: Upload release bundle as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: |
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x64.zip
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x86.zip
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-macos-x64.zip
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-x64.tar.gz
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm.tar.gz
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm64.tar.gz
-          retention-days: 60
 
       - name: Release
         uses: softprops/action-gh-release@v1
