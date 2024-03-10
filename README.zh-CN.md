@@ -64,9 +64,17 @@ sudo apt install vlc
 
 - [VLC]
 
+## 开发与贡献
+
+VS 和 VSC 都行（我用 VSC），理论上你有 dotnet SDK 就完事了。
+
+Issue 和 PR 都可以提，但如果你想做出功能性的改变，请先开一个 issue 我们来讨论一下。
+
 ## 源代码许可
 
 MIT
+
+不过实际上你想干啥就干啥
 
 [vlc]: https://www.videolan.org/
 [terminal.gui]: https://github.com/migueldeicaza/gui.cs

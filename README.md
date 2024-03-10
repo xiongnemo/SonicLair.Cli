@@ -65,9 +65,18 @@ More info about this [here](https://github.com/videolan/libvlcsharp/blob/3.x/doc
 
 - [VLC]
 
+## Deverlop & Contribute
+
+Visual Studio (Code) is supported. Grab your SDK and you are ready to go.
+
+Feel free to file issues and submit PRs.
+
+But if you want to make functional changes, make sure to discuss it in a separate issue (so we can track it!).
+
 ## License
 
 MIT, see LICENSE for more info.
+
 But basically, you can do whatever you want with this code.
 
 [vlc]: https://www.videolan.org/
