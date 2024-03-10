@@ -8,7 +8,7 @@
 
 ## An album-centered subsonic client for the Terminal
 
-SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .NET Core 6, designed to be cross-platform (Windows, Linux and macOS). It's derived from [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET).
+SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .NET Core 8, designed to be cross-platform (Windows, Linux and macOS). It's derived from [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET).
 
 ## Features
 

@@ -8,7 +8,7 @@
 
 ## 一个以专辑为中心，运行在终端里的 Subsonic 客户端
 
-SonicLair.Cli 是一个使用 .NET Core 6 构建的运行在终端里的 Subsonic 客户端，跨平台 (Windows, Linux 和 macOS)。 它从 [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET) 分叉。
+SonicLair.Cli 是一个使用 .NET Core 8 构建的运行在终端里的 Subsonic 客户端，跨平台 (Windows, Linux 和 macOS)。 它从 [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET) 分叉。
 
 ## 特点
 

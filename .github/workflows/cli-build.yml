@@ -18,7 +18,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: "6.x" # SDK Version to use; x will use the latest version of the 3.1 channel
+          dotnet-version: "8.x" # SDK Version to use; x will use the latest version of the 3.1 channel
 
       - name: Checkout source
         uses: actions/checkout@v2
