@@ -7,7 +7,7 @@ using SonicLair.Lib.Types;
 using SonicLair.Lib.Types.SonicLair;
 
 using System;
-using System.Collections;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -18,6 +18,7 @@ namespace SonicLair.Lib.Services
 {
     public class MusicPlayerService : IMusicPlayerService
     {
+        private IMediaIntergration _mediaIntergration;
         private readonly LibVLC _libVlc;
         private readonly MediaPlayer _mediaPlayer;
         private readonly ISubsonicService _client;
@@ -33,6 +34,10 @@ namespace SonicLair.Lib.Services
 
         public MusicPlayerService(ISubsonicService subsonicService)
         {
+            Assembly ass = Assembly.LoadFile(@$"{System.IO.Directory.GetCurrentDirectory()}\SonicLair.MediaIntergration.Windows\bin\Debug\net8.0-windows10.0.19041.0\SonicLair.MediaIntergration.Windows.dll");
+            Type tp = ass.GetType("SonicLair.MediaIntergration.Windows.MediaIntergration");
+            Object obj = Activator.CreateInstance(tp);
+            _mediaIntergration = (IMediaIntergration)obj;
             _client = subsonicService;
             _isShuffling = false;
             _playlist = new Playlist()

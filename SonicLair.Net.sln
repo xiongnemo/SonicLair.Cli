@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SonicLair.Cli", "SonicLair.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SonicLair.Lib", "SonicLair.Lib\SonicLair.Lib.csproj", "{F8F256C9-204A-4A39-9E88-DF21E4DB720D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SonicLair.MediaIntergration.Windows", "SonicLair.MediaIntergration.Windows\SonicLair.MediaIntergration.Windows.csproj", "{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,26 @@ Global
 		{F8F256C9-204A-4A39-9E88-DF21E4DB720D}.Release|x64.Build.0 = Release|Any CPU
 		{F8F256C9-204A-4A39-9E88-DF21E4DB720D}.Release|x86.ActiveCfg = Release|Any CPU
 		{F8F256C9-204A-4A39-9E88-DF21E4DB720D}.Release|x86.Build.0 = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Debug|x86.Build.0 = Debug|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|ARM.Build.0 = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|ARM64.Build.0 = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|x64.Build.0 = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4C0EA94-FBAE-430C-92ED-6366AA91A0C9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
