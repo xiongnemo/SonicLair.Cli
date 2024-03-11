@@ -4,8 +4,22 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
+<!--CsWinRT properties-->
+  <PropertyGroup>
+    <!--Specify namespaces to create a C# projection for-->
+    <!-- <CsWinRTIncludes>Windows.Media</CsWinRTIncludes> -->
+    <CsWinRTIncludes>Windows.Foundation</CsWinRTIncludes>
+    <CsWinRTIncludes>Windows.Foundation.Metadata</CsWinRTIncludes>
+    <CsWinRTExcludes>Windows.Foundation.Diagnostics</CsWinRTExcludes>
+    <CsWinRTIncludes>Windows.Media.Playback</CsWinRTIncludes>
+    <!-- <CsWinRTIncludes>Windows.Storage</CsWinRTIncludes> -->
+    <CsWinRTInputs>WinMetadata/Windows.*.winmd</CsWinRTInputs>
+    <CsWinRTWindowsMetadata>Windows.winmd</CsWinRTWindowsMetadata>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="LibVLCSharp" Version="3.8.2" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Text.Json" Version="8.0.2" />
   </ItemGroup>

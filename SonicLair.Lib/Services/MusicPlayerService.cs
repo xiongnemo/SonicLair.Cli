@@ -18,6 +18,8 @@ namespace SonicLair.Lib.Services
 {
     public class MusicPlayerService : IMusicPlayerService
     {
+        private Windows.Media.Playback.MediaPlaybackItem _item;
+        private Windows.Media.Playback.MediaItemDisplayProperties _prop;
         private readonly LibVLC _libVlc;
         private readonly MediaPlayer _mediaPlayer;
         private readonly ISubsonicService _client;
