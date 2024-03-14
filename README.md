@@ -39,6 +39,8 @@ If you are on a Windows and [scoop](https://github.com/ScoopInstaller/Scoop)-rea
 scoop bucket add nemo https://github.com/xiongnemo/windows-binaries-scoop-bucket && scoop install SonicLair.Cli
 ```
 
+Use a proper monospace font (with CJK if you want) to correctly show the paddings.
+
 ### Linux caveats
 
 For linux, the app will search for the relevant libvlc files from your installation.

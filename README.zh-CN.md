@@ -39,6 +39,8 @@ SonicLair.Cli 是一个使用 .NET Core 8 构建的运行在终端里的 Subsoni
 scoop bucket add nemo https://github.com/xiongnemo/windows-binaries-scoop-bucket && scoop install SonicLair.Cli
 ```
 
+使用一个等宽字体（如果你需要的话，CJK）来正确显示终端中的文字排版。
+
 ### Linux
 
 对于 Linux，应用程序会自动搜索 libvlc。
