@@ -1,4 +1,5 @@
-# 1.1.1 release!
+# 1.1.2 release!
 
-* Fix shuffle (see git commit desc).
-* Allow more time to do search inside list.
+* fix: padding of wide rune
+* refined title for PlaylistView
+* standardize length of each entry in element in playlist
