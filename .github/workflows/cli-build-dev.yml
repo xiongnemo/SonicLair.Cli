@@ -26,8 +26,10 @@ jobs:
       - name: Build win-x64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime win-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtWinx64
+          dotnet publish --configuration Release --self-contained true --runtime win-x64 --verbosity quiet -p:PublishSingleFile=true -o builtWinx64
           rm -r builtWinx64/libvlc/win-x86
+          rm -r builtWinx64/*.pdb
+          rm -r builtWinx64/libvlc.dylib
           cd ..
           mkdir win64
           cp -r SonicLair.Cli/builtWinx64/libvlc win64/
@@ -36,30 +38,32 @@ jobs:
       - name: Build win-x86
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime win-x86 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtWinx86
+          dotnet publish --configuration Release --self-contained true --runtime win-x86 --verbosity quiet -p:PublishSingleFile=true -o builtWinx86
           rm -r builtWinx86/libvlc/win-x64
+          rm -r builtWinx64/*.pdb
+          rm -r builtWinx64/libvlc.dylib
           cd ..
           mkdir win86
           cp -r SonicLair.Cli/builtWinx86/libvlc win86/
           cp SonicLair.Cli/builtWinx86/SonicLair.Cli.exe win86/
 
       - name: Build osx-x64
-        run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtOsx
+        run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -o builtOsx
 
       - name: Build linux-x64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinux64
+          dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -o builtLinux64
 
       - name: Build linux-arm
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArmel
+          dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -o builtLinuxArmel
 
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -p:PublishTrimmed=true -o builtLinuxArm64
+          dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -o builtLinuxArm64
 
       - name: Attach win-x64 artifacts
         uses: actions/upload-artifact@v4

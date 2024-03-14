@@ -1,8 +1,8 @@
 using LibVLCSharp.Shared;
-using Microsoft.VisualBasic;
 using NStack;
 
 using SonicLair.Cli;
+using SonicLair.Cli.Tools;
 using SonicLair.Lib.Infrastructure;
 using SonicLair.Lib.Services;
 using SonicLair.Lib.Types.SonicLair;
@@ -245,9 +245,9 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
             {
                 X = 0,
                 Y = 0,
-                Width = 9,
+                Width = 11,
                 Height = 1,
-                Text = "[Search:]",
+                Text = "[Search: ?]",
                 CanFocus = false,
             };
             TextField searchField = SonicLairControls.GetTextField("");
@@ -330,14 +330,14 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                 }
                 var cancellationTokenSource = new CancellationTokenSource();
                 SonicLairControls.AnimateTextView(searchLabel, new[]{
-                    "[Search/]",
-                    "[Search-]",
-                    "[Search\\]",
-                    "[Search|]",
+                    "[Search: /]",
+                    "[Search: -]",
+                    "[Search: \\]",
+                    "[Search: |]",
                 }, 800, cancellationTokenSource.Token);
                 var ret = await _subsonicService!.Search(value.ToString(), 100);
                 cancellationTokenSource.Cancel();
-                searchLabel.Text = "[Search:]";
+                searchLabel.Text = "[Search: ?]";
                 Application.MainLoop.Invoke((Action)(() =>
                 {
                     if (ret.Artists != null && ret.Artists.Any<Artist>())
@@ -352,7 +352,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                         var max = ret.Albums.Max(s => s.Name.Length);
                         albumsList.Source = new SonicLairDataSource<Album>(ret.Albums, (s) =>
                         {
-                            return $"{s.Artist} :: {s.Name.PadRight(max, ' ')}";
+                            return $"{s.Artist} :: {s.Name.RunePadRight(max, ' ')}";
                         });
                     }
                     if (ret.Songs != null && ret.Songs.Any<Song>())
@@ -360,7 +360,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                         var max = ret.Songs.Max(s => s.Title.Length);
                         songsList.Source = new SonicLairDataSource<Song>(ret.Songs, (s) =>
                         {
-                            return $"{s.Artist} :: {s.Album} :: {s.Title.PadRight(max, ' ')}";
+                            return $"{s.Artist} :: {s.Album} :: {s.Title.RunePadRight(max, ' ')}";
                         });
                     }
                     Application.Refresh();
@@ -417,7 +417,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
             listView.Source = new SonicLairDataSource<Artist>(artists, (a) =>
             {
                 var tag = a.AlbumCount > 1 ? "Albums" : "Album";
-                return $"{a.ToString().PadRight(max, ' ')} {a.AlbumCount.ToString().PadLeft(maxAlbums, ' ')} {tag}";
+                return $"{a.ToString().RunePadRight(max, ' ')} {a.AlbumCount.ToString().RunePadLeft(maxAlbums, ' ')} {tag}";
             });
             listView.OpenSelectedItem += ArtistsView_Selected;
             mainView.Add(listView);
@@ -479,7 +479,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
         {
             var playlist = await _subsonicService!.GetPlaylist(id);
             mainView!.RemoveAll();
-            mainView.Title = $"{playlist.Name} :: {playlist.Owner} -- Lasts {playlist.Duration.GetAsMMSS()}";
+            mainView.Title = $"Playlist [{playlist.Name} :: {playlist.Owner}] -- Lasts {playlist.Duration.GetAsMMSS()}";
             SonicLairListView<Song> listView = new SonicLairListView<Song>()
             {
                 X = 0,
@@ -487,11 +487,11 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                 Width = Dim.Fill(),
                 Height = Dim.Fill()
             };
-            var maxTitle = playlist.Entry.Max(s => s.Title.Length);
-            var maxArtist = playlist.Entry.Max(s => s.Artist.Length);
+            var maxTitle = playlist.Entry.Max(s => s.Title.StandardizedStringLength());
+            var maxArtist = playlist.Entry.Max(s => s.Artist.StandardizedStringLength());
             var source = new SonicLairDataSource<Song>(playlist.Entry, (s) =>
             {
-                return $"{s.Title.PadRight(maxTitle, ' ')} :: {s.Artist.PadRight(maxArtist, ' ')} [{s.Duration.GetAsMMSS()}]";
+                return $"{s.Title.RunePadRight(maxTitle, ' ')} :: {s.Artist.RunePadRight(maxArtist, ' ')} [{s.Duration.GetAsMMSS()}]";
             });
             listView.Source = source;
             listView.OpenSelectedItem += (ListViewItemEventArgs e) =>
@@ -523,7 +523,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
             var maxOwner = playlists.Max(s => s.Owner.Length);
             listView.Source = new SonicLairDataSource<Playlist>(playlists, (p) =>
             {
-                return $"{p.Name.PadRight(maxName + 1, ' ')} :: {p.Owner.PadRight(maxOwner + 1, ' ')} [lasts {p.Duration.GetAsMMSS()}]";
+                return $"{p.Name.RunePadRight(maxName + 1, ' ')} :: {p.Owner.RunePadRight(maxOwner + 1, ' ')} [lasts {p.Duration.GetAsMMSS()}]";
             });
             listView.OpenSelectedItem += (ListViewItemEventArgs e) =>
             {
@@ -585,7 +585,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                         }
                         else
                         {
-                            title = s.Title.PadRight(max, ' ');
+                            title = s.Title.RunePadRight(max, ' ');
                         }
                         return $"{(s.Id == currentId ? "*" : "")}{title}[{s.Duration.GetAsMMSS()}]";
                     });
