@@ -31,7 +31,9 @@ SonicLair.Cli is a terminal music client for subsonic compatible music servers b
 
 [<img src="./ghlogo.svg" width="150px">](https://github.com/xiongnemo/SonicLair.Cli/releases)
 
-It is an (almost) self contained executable. You can grab the version for your operating system from the releases page. Within the compressed file there is the excutable and (if applicable) the libvlc libraries needed for the audio backend to work. Please keep the directory structure as is.
+* There exists a [dev](https://github.com/xiongnemo/SonicLair.Cli/tree/dev) branch. Check regularly for quick bug fixes!
+
+The [release](https://github.com/xiongnemo/SonicLair.Cli/releases) is is an (almost) self contained executable. You can grab the version for your operating system from the releases page. Within the compressed file there is the excutable and (if applicable) the libvlc libraries needed for the audio backend to work. Please keep the directory structure as is.
 
 If you are on a Windows and [scoop](https://github.com/ScoopInstaller/Scoop)-ready, you can also use scoop to install:
 

@@ -31,7 +31,9 @@ SonicLair.Cli 是一个使用 .NET Core 8 构建的运行在终端里的 Subsoni
 
 [<img src="./ghlogo.svg" width="150px">](https://github.com/xiongnemo/SonicLair.Cli/releases)
 
-提供的可执行文件（几乎）不需要别的依赖。你可以直接从 Release 页面下载对应你的操作系统的版本。在压缩文件中有可执行文件和使得音频后端能运作的 libvlc 库（如果有）。请不要更改目录结构。
+* 有 [dev](https://github.com/xiongnemo/SonicLair.Cli/tree/dev) 分支。快速 bug 修正一般发生在此分支上，需要的话可以经常看看。
+
+[提供的可执行文件](https://github.com/xiongnemo/SonicLair.Cli/releases)（几乎）不需要别的依赖。你可以直接从 Release 页面下载对应你的操作系统的版本。在压缩文件中有可执行文件和使得音频后端能运作的 libvlc 库（如果有）。请不要更改目录结构。
 
 如果你在 Windows 上且已经有了 [scoop](https://github.com/ScoopInstaller/Scoop)，你也可以这么安装：
 
