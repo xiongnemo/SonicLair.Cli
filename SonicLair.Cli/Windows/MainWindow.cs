@@ -479,7 +479,7 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
         {
             var playlist = await _subsonicService!.GetPlaylist(id);
             mainView!.RemoveAll();
-            mainView.Title = $"{playlist.Name} :: {playlist.Owner} -- Lasts {playlist.Duration.GetAsMMSS()}";
+            mainView.Title = $"Playlist [{playlist.Name} :: {playlist.Owner}] -- Lasts {playlist.Duration.GetAsMMSS()}";
             SonicLairListView<Song> listView = new SonicLairListView<Song>()
             {
                 X = 0,
@@ -487,8 +487,8 @@ C-q Quit | Space Play/Pause | C-b Prev | C-n Next | C-t Repeat | C-h Shuffle | C
                 Width = Dim.Fill(),
                 Height = Dim.Fill()
             };
-            var maxTitle = playlist.Entry.Max(s => s.Title.Length);
-            var maxArtist = playlist.Entry.Max(s => s.Artist.Length);
+            var maxTitle = playlist.Entry.Max(s => s.Title.StandardizedStringLength());
+            var maxArtist = playlist.Entry.Max(s => s.Artist.StandardizedStringLength());
             var source = new SonicLairDataSource<Song>(playlist.Entry, (s) =>
             {
                 return $"{s.Title.RunePadRight(maxTitle, ' ')} :: {s.Artist.RunePadRight(maxArtist, ' ')} [{s.Duration.GetAsMMSS()}]";
