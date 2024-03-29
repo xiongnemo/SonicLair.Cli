@@ -55,11 +55,6 @@ jobs:
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -o builtLinux64
 
-      - name: Build linux-arm
-        run: |
-          cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -o builtLinuxArmel
-
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
@@ -90,12 +85,6 @@ jobs:
         with:
             name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-x64
             path: SonicLair.Cli/builtLinux64/SonicLair.Cli
-
-      - name: Attach linux-arm artifacts
-        uses: actions/upload-artifact@v4
-        with:
-            name: SonicLair.Cli-${{steps.short.outputs.short}}-linux-arm
-            path: SonicLair.Cli/builtLinuxArmel/SonicLair.Cli
 
       - name: Attach linux-arm64 artifacts
         uses: actions/upload-artifact@v4
