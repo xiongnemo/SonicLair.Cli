@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-x86;osx-x64</RuntimeIdentifiers>
+    <KnownRuntimePack>
+      <LatestRuntimeFrameworkVersion Condition="'%(TargetFramework)' == 'net8.0'">8.0.3</LatestRuntimeFrameworkVersion>
+    </KnownRuntimePack> 
   </PropertyGroup>
 
   <ItemGroup>
