@@ -40,8 +40,8 @@ jobs:
           cd SonicLair.Cli
           dotnet publish --configuration Release --self-contained true --runtime win-x86 --verbosity quiet -p:PublishSingleFile=true -o builtWinx86
           rm -r builtWinx86/libvlc/win-x64
-          rm -r builtWinx64/*.pdb
-          rm -r builtWinx64/libvlc.dylib
+          rm -r builtWinx86/*.pdb
+          rm -r builtWinx86/libvlc.dylib
           cd ..
           mkdir win86
           cp -r SonicLair.Cli/builtWinx86/libvlc win86/
