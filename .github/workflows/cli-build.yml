@@ -76,13 +76,6 @@ jobs:
           cd builtLinux64
           tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-x64.tar.gz ./SonicLair.Cli
 
-      - name: Build linux-arm
-        run: |
-          cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-arm --verbosity quiet -p:PublishSingleFile=true -o builtLinuxArmel
-          cd builtLinuxArmel
-          tar czfv ../../SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm.tar.gz ./SonicLair.Cli
-
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
@@ -99,5 +92,4 @@ jobs:
             SonicLair.Cli-${{steps.tag.outputs.tag}}-win-x86.zip
             SonicLair.Cli-${{steps.tag.outputs.tag}}-macos-x64.zip
             SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-x64.tar.gz
-            SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm.tar.gz
             SonicLair.Cli-${{steps.tag.outputs.tag}}-linux-arm64.tar.gz

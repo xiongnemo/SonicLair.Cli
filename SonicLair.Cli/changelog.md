@@ -1,5 +1,5 @@
-# 1.1.2 release!
+# 1.2.0 release!
 
-* Fix padding of wide rune.
-* Refined title for PlaylistView.
-* Standardize length of each entry in element in playlist.
+* MediaIntegration: Initial support for UWP
+* Never trust Microsoft's docs.
+* macOS version tested by @PolarBears.
