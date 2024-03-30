@@ -43,6 +43,13 @@ scoop bucket add nemo https://github.com/xiongnemo/windows-binaries-scoop-bucket
 
 Use a proper monospace font (with CJK if you want) to correctly show the paddings.
 
+If you are on Windows, `SystemMediaTransportControls` is integrated. You can use Windows media control:
+
+<p align="middle">
+<img src="./Assets/screenshot.cli.6.png" width="70%">
+</p>
+
+
 ### Linux caveats
 
 For linux, the app will search for the relevant libvlc files from your installation.

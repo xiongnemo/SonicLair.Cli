@@ -43,6 +43,12 @@ scoop bucket add nemo https://github.com/xiongnemo/windows-binaries-scoop-bucket
 
 使用一个等宽字体（如果你需要的话，CJK）来正确显示终端中的文字排版。
 
+如果你使用 Windows, 它集成了 `SystemMediaTransportControls`。你可以直接使用系统媒体控制：
+
+<p align="middle">
+<img src="./Assets/screenshot.cli.6.png" width="70%">
+</p>
+
 ### Linux
 
 对于 Linux，应用程序会自动搜索 libvlc。
