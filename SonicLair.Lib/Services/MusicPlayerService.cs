@@ -6,6 +6,8 @@ using SonicLair.Lib.Infrastructure;
 using SonicLair.Lib.Types;
 using SonicLair.Lib.Types.SonicLair;
 
+using SonicLair.Lib.Services;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,11 +15,13 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace SonicLair.Lib.Services
 {
     public class MusicPlayerService : IMusicPlayerService
     {
+        private IMediaIntergration _mediaIntergration = null;
         private readonly LibVLC _libVlc;
         private readonly MediaPlayer _mediaPlayer;
         private readonly ISubsonicService _client;
@@ -49,6 +53,8 @@ namespace SonicLair.Lib.Services
                 Public = false,
                 SongCount = 0
             };
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                _mediaIntergration = new MediaIntergration.Windows.MediaIntergration(this);
             _originalPlaylist = new List<Song>();
             _currentStateListeners = new List<EventHandler<CurrentStateChangedEventArgs>>();
             _playerTimeListeners = new List<EventHandler<MediaPlayerTimeChangedEventArgs>>();
@@ -264,6 +270,7 @@ namespace SonicLair.Lib.Services
                 _currentTrack = _playlist.Entry[0];
                 LoadMedia();
             }
+            _mediaIntergration?.Play();
             _mediaPlayer.Play();
         }
 
@@ -280,6 +287,7 @@ namespace SonicLair.Lib.Services
         public void Pause()
         {
             _mediaPlayer.Pause();
+            _mediaIntergration?.Pause();
         }
 
         public void Seek(float time, bool relative = false)
@@ -307,6 +315,7 @@ namespace SonicLair.Lib.Services
                 Notifier.NotifyObservers("MScurrentTrack", $"{{\"currentTrack\": {JsonConvert.SerializeObject(_currentTrack, StaticHelpers.GetJsonSerializerSettings())}}}");
             }
             _client.Scrobble(_currentTrack.Id);
+            _mediaIntergration?.Update(_currentTrack.Title, _currentTrack.Artist, _currentTrack.Album, _currentTrack.Image);
         }
 
         // intendeded by user
