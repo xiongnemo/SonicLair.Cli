@@ -10,6 +10,15 @@
    <img src="./logo.svg">
 </p>
 
+> [!IMPORTANT]  
+> For best visual quality, you need a terminal which don't print control characters. On Windows, conhost.exe is not supported, while newest Windows Terminal has the issue. It works quite well with the default terminal on macOS.
+> 
+> For more information, see [microsoft/terminal/issues/17016](https://github.com/microsoft/terminal/issues/17016), [gui-cs/Terminal.Gui/issues/2928](https://github.com/gui-cs/Terminal.Gui/issues/2928)
+>
+> Kindly install `windows-terminal@1.19.10302.0` if you are on Windows (which I tested)
+> 
+> This is NOT a Soniclair.Cli issue.
+
 ## An album-centered subsonic client for the Terminal
 
 SonicLair.Cli is a terminal music client for subsonic compatible music servers built using .NET Core 6, designed to be cross-platform (Windows, Linux and macOS). It's derived from [SonicLair.Net](https://github.com/thelinkin3000/SonicLair.NET).
