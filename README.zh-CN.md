@@ -12,11 +12,11 @@
 </p>
 
 > [!IMPORTANT]  
-> 为了展现最佳视觉效果，你需要一个不打印控制字符的终端。在 Windows 上， conhost.exe 不受支持。最新版的 Windows Terminal 同样也有不兼容问题。在 macOS 上使用默认终端似乎没问题。
+> 为了展现最佳视觉效果，你需要一个不打印控制字符的终端。在 Windows 上， conhost.exe 不受支持。~~最新版的 Windows Terminal 同样也有不兼容问题。~~ 在 macOS 上使用默认终端似乎没问题。
 > 
 > 如欲了解更多信息，请参照：[microsoft/terminal/issues/17016](https://github.com/microsoft/terminal/issues/17016) 和 [gui-cs/Terminal.Gui/issues/2928](https://github.com/gui-cs/Terminal.Gui/issues/2928)
 >
-> 如果你使用 Windows，请安装 `windows-terminal@1.19.10302.0` （我的版本）
+> ~~如果你使用 Windows，请安装 `windows-terminal@1.19.10302.0` （我的版本）~~ 好像修好了？
 > 
 > 该问题不是 Soniclair.Cli 导致的.
 
