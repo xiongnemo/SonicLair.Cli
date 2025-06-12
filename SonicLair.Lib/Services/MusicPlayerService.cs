@@ -268,7 +268,7 @@ namespace SonicLair.Lib.Services
             if (_playlist.Entry.Count > 0 && _currentTrack == null)
             {
                 _currentTrack = _playlist.Entry[0];
-                LoadMedia();
+                _ = LoadMedia();
             }
             _mediaIntergration?.Play();
             _mediaPlayer.Play();
@@ -280,7 +280,7 @@ namespace SonicLair.Lib.Services
             {
                 _currentTrack = _playlist.Entry[index];
             }
-            LoadMedia();
+            _ = LoadMedia();
             Play();
         }
 
@@ -305,7 +305,7 @@ namespace SonicLair.Lib.Services
             _mediaPlayer.Position = (position + time).Clamp(0, 1);
         }
 
-        private void LoadMedia()
+        private async Task LoadMedia()
         {
             var uri = _client.GetSongUri(_currentTrack.Id);
             var media = new Media(_libVlc, uri);
@@ -314,8 +314,13 @@ namespace SonicLair.Lib.Services
             {
                 Notifier.NotifyObservers("MScurrentTrack", $"{{\"currentTrack\": {JsonConvert.SerializeObject(_currentTrack, StaticHelpers.GetJsonSerializerSettings())}}}");
             }
+#pragma warning disable CS4014 // Fire-and-forget is intentional for scrobbling
             _client.Scrobble(_currentTrack.Id);
-            _mediaIntergration?.Update(_currentTrack.Title, _currentTrack.Artist, _currentTrack.Album, _currentTrack.Image);
+#pragma warning restore CS4014
+            if (_mediaIntergration != null)
+            {
+                await _mediaIntergration.Update(_currentTrack.Title, _currentTrack.Artist, _currentTrack.Album, _currentTrack.Image);
+            }
         }
 
         // intendeded by user
@@ -330,7 +335,7 @@ namespace SonicLair.Lib.Services
                         return;
                     case RepeatStatus.RepeatAll:
                         _currentTrack = _playlist.Entry[0];
-                        LoadMedia();
+                        _ = LoadMedia();
                         Play();
                         return;
                     default:
@@ -338,7 +343,7 @@ namespace SonicLair.Lib.Services
                 }
             }
             _currentTrack = _playlist.Entry[_playlist.Entry.IndexOf(_currentTrack) + 1];
-            LoadMedia();
+            _ = LoadMedia();
             Play();
         }
 
@@ -348,7 +353,7 @@ namespace SonicLair.Lib.Services
             switch (_repeatStatus)
             {
                 case RepeatStatus.RepeatOne:
-                    LoadMedia();
+                    _ = LoadMedia();
                     Play();
                     return;
                 case RepeatStatus.None:
@@ -370,7 +375,7 @@ namespace SonicLair.Lib.Services
                         return;
                     case RepeatStatus.RepeatAll:
                         _currentTrack = _playlist.Entry[_playlist.Entry.Count - 1];
-                        LoadMedia();
+                        _ = LoadMedia();
                         Play();
                         return;
                     default:
@@ -378,7 +383,7 @@ namespace SonicLair.Lib.Services
                 }
             }
             _currentTrack = _playlist.Entry[_playlist.Entry.IndexOf(_currentTrack) - 1];
-            LoadMedia();
+            _ = LoadMedia();
             Play();
         }
 
@@ -426,7 +431,9 @@ namespace SonicLair.Lib.Services
                 s.Image = _client.GetCoverArtUri(s.AlbumId);
             }
             _currentTrack = _playlist.Entry[track];
-            LoadMedia();
+#pragma warning disable CS4014 // Fire-and-forget is intentional here for async media loading
+            _ = LoadMedia();
+#pragma warning restore CS4014
             Play();
         }
 

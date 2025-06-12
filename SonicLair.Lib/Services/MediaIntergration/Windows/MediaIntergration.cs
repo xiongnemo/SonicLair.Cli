@@ -1,4 +1,5 @@
 ﻿using SonicLair.Lib.Types;
+using System.Threading.Tasks;
 
 namespace SonicLair.Lib.Services.MediaIntergration.Windows
 {
@@ -11,9 +12,9 @@ namespace SonicLair.Lib.Services.MediaIntergration.Windows
             _control = new Control(musicPlayerService);
         }
 
-        public void Update(string title, string artist, string album, string imageUri)
+        public async Task Update(string title, string artist, string album, string imageUri)
         {
-            _control.Update(title, artist, album, imageUri);
+            await _control.Update(title, artist, album, imageUri);
         }
 
         public void Play()

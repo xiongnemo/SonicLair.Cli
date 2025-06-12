@@ -18,7 +18,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "6.x" # SDK Version to use; x will use the latest version of the 3.1 channel
+          dotnet-version: "8.x" # SDK Version to use; x will use the latest version of the 3.1 channel
 
       - name: Checkout source
         uses: actions/checkout@v4
@@ -26,39 +26,37 @@ jobs:
       - name: Build win-x64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime win-x64 --verbosity quiet -p:PublishSingleFile=true -o builtWinx64
+          dotnet publish --self-contained false --runtime win-x64 --verbosity quiet -o builtWinx64
           rm -r builtWinx64/libvlc/win-x86
           rm -r builtWinx64/*.pdb
           rm -r builtWinx64/libvlc.dylib
           cd ..
           mkdir win64
-          cp -r SonicLair.Cli/builtWinx64/libvlc win64/
-          cp SonicLair.Cli/builtWinx64/SonicLair.Cli.exe win64/
+          cp -r SonicLair.Cli/builtWinx64/* win64/
 
       - name: Build win-x86
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime win-x86 --verbosity quiet -p:PublishSingleFile=true -o builtWinx86
+          dotnet publish --self-contained false --runtime win-x86 --verbosity quiet -o builtWinx86
           rm -r builtWinx86/libvlc/win-x64
           rm -r builtWinx86/*.pdb
           rm -r builtWinx86/libvlc.dylib
           cd ..
           mkdir win86
-          cp -r SonicLair.Cli/builtWinx86/libvlc win86/
-          cp SonicLair.Cli/builtWinx86/SonicLair.Cli.exe win86/
+          cp -r SonicLair.Cli/builtWinx86/* win86/
 
       - name: Build osx-x64
-        run: cd SonicLair.Cli && dotnet publish --configuration Release --self-contained true --runtime osx-x64 --verbosity quiet -p:PublishSingleFile=true -o builtOsx
+        run: cd SonicLair.Cli && dotnet publish --self-contained false --runtime osx-x64 --verbosity quiet -o builtOsx
 
       - name: Build linux-x64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-x64 --verbosity quiet -p:PublishSingleFile=true -o builtLinux64
+          dotnet publish --self-contained false --runtime linux-x64 --verbosity quiet -o builtLinux64
 
       - name: Build linux-arm64
         run: |
           cd SonicLair.Cli
-          dotnet publish --configuration Release --self-contained true --runtime linux-arm64 --verbosity quiet -p:PublishSingleFile=true -o builtLinuxArm64
+          dotnet publish --self-contained false --runtime linux-arm64 --verbosity quiet -o builtLinuxArm64
 
       - name: Attach win-x64 artifacts
         uses: actions/upload-artifact@v4

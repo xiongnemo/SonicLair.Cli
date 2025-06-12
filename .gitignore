@@ -1,3 +1,5 @@
 .vs/**
 .vscode**
 UpgradeLog.htm
+testbuild*/
+built*/

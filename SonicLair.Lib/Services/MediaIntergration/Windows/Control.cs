@@ -8,7 +8,7 @@ using Windows.Storage.Streams;
 
 using System.Threading.Tasks;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 
 namespace SonicLair.Lib.Services.MediaIntergration.Windows
 {
@@ -57,7 +57,7 @@ namespace SonicLair.Lib.Services.MediaIntergration.Windows
             sendNotification("SonicLair is running", "on Windows");
         }
 
-        public void Update(string title, string artist, string album, string imageUri)
+        public async Task Update(string title, string artist, string album, string imageUri)
         {
             _systemMediaTransportControls.IsEnabled = true;
             // https://learn.microsoft.com/en-us/windows/uwp/audio-video-camera/system-media-transport-controls
@@ -74,12 +74,12 @@ namespace SonicLair.Lib.Services.MediaIntergration.Windows
             if (imageUri.StartsWith("http"))
             {
                 string remoteUri = imageUri;
-                string fileName = "album.png", myStringWebResource = null;
+                string fileName = "album.png";
 
-                using (WebClient myWebClient = new())
+                using (HttpClient httpClient = new())
                 {
-                    myStringWebResource = remoteUri;
-                    myWebClient.DownloadFile(myStringWebResource, fileName);
+                    byte[] imageBytes = await httpClient.GetByteArrayAsync(remoteUri);
+                    await File.WriteAllBytesAsync(fileName, imageBytes);
                 }
 
                 imageUri = Path.Combine(Environment.CurrentDirectory, fileName);
