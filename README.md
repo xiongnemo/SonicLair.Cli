@@ -11,11 +11,13 @@
 </p>
 
 > [!IMPORTANT]  
-> For best visual quality, you need a terminal which don't print control characters. On Windows, conhost.exe is not supported ~~while newest Windows Terminal has the issue~~. It works quite well with the default terminal on macOS.
+> For best visual quality, you need a terminal which don't print control characters. On Windows, conhost.exe is not supported while newest Windows Terminal has the issue. Alacritty is recommended (Please refer to the screenshot in Assets/). It works quite well with the default terminal on macOS.
 > 
 > For more information, see [microsoft/terminal/issues/17016](https://github.com/microsoft/terminal/issues/17016), [gui-cs/Terminal.Gui/issues/2928](https://github.com/gui-cs/Terminal.Gui/issues/2928)
 >
-> ~~Kindly install `windows-terminal@1.19.10302.0` if you are on Windows (which I tested)~~ It seems to work well now?
+> Kindly install `windows-terminal@1.19.10302.0` if you are on Windows and still want to use Windows Terminal (which I tested)
+>
+> The issue has been fixed in Terminal.Gui but it goes to v2, which SonicLair.Cli is not ready for yet. (Possibly never)
 > 
 > This is NOT a Soniclair.Cli issue.
 
