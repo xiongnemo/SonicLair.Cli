@@ -1,5 +1,8 @@
 # Soniclair.Cli
 
+> [!NOTE]  
+> 该仓库已归档。它不再维护，也不会收到更新或支持。一个使用 Terminal.Gui v2 的新版本/重构正在进行中，但尚未准备好。
+
 [English](./README.md) [简体中文](./README.zh-CN.md)
 
 [![Release](https://github.com/xiongnemo/SonicLair.Cli/actions/workflows/cli-build.yml/badge.svg)](https://github.com/xiongnemo/SonicLair.Cli) [![GitHub release](https://img.shields.io/github/release/xiongnemo/SonicLair.Cli.svg)](https://GitHub.com/xiongnemo/SonicLair.Cli/releases/) [![CodeFactor](https://www.codefactor.io/repository/github/xiongnemo/soniclair.cli/badge)](https://www.codefactor.io/repository/github/xiongnemo/soniclair.cli)

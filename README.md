@@ -1,5 +1,8 @@
 # Soniclair.Cli
 
+> [!NOTE]  
+> This repo is archived. It is no longer maintained and will not receive updates or support. A new version / rework of this using Terminal.Gui v2 is in the works, but it is not ready yet.
+
 [English](./README.md) [简体中文](./README.zh-CN.md)
 
 [![Release](https://github.com/xiongnemo/SonicLair.Cli/actions/workflows/cli-build.yml/badge.svg)](https://github.com/xiongnemo/SonicLair.Cli) [![GitHub release](https://img.shields.io/github/release/xiongnemo/SonicLair.Cli.svg)](https://GitHub.com/xiongnemo/SonicLair.Cli/releases/) [![CodeFactor](https://www.codefactor.io/repository/github/xiongnemo/soniclair.cli/badge)](https://www.codefactor.io/repository/github/xiongnemo/soniclair.cli)
