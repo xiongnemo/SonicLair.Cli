@@ -1,7 +1,7 @@
 # Soniclair.Cli
 
 > [!NOTE]  
-> This repo is archived. It is no longer maintained and will not receive updates or support. A new version / rework of this using Terminal.Gui v2 is in the works, but it is not ready yet.
+> This repo is archived. It is no longer maintained and will not receive updates or support. A new version/rework of this using Terminal.Gui v2 (and many other upgrades!) is [Saki](https://github.com/xiongnemo/Saki).
 
 [English](./README.md) [简体中文](./README.zh-CN.md)
 
